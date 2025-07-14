@@ -1,8 +1,12 @@
-const express = require('express')
+const express = require('express');
 const app = express();
+const morgan = require('morgan');
+const bodyParser = require('body-parser')
+const mongoose = require('mongoose');
 
 //Middleware 
-app.use(express.json())
+app.use(bodyParser.json())
+app.use(morgan('tiny'))
 
 require("dotenv/config");
 
@@ -22,6 +26,10 @@ app.post(`${api}/products`, (req,res)=>{
     console.log(newProduct);
     res.send(newProduct);
 })
+
+mongoose.connect(process.env.CONNECTION_STRING)
+        .then(()=>console.log("Database connection is ready ..."))
+        .catch((err)=>console.log(err));
 
 app.listen(3000, ()=>{
     console.log(api);
