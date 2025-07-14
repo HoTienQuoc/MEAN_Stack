@@ -13,6 +13,8 @@ require("dotenv/config");
 
 const api = process.env.API_URL;
 
+const Product = require("./models/product")
+
 app.get(`${api}/products`, async (req,res)=>{
     const productList = await Product.find();
     if(!productList){
