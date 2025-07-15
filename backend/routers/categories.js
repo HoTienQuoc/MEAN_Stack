@@ -78,7 +78,7 @@ router.put(`/:id`, async (req, res) => {
 });
 
 router.delete("/:id", (req, res) => {
-  Category.findByIdAndRemove(req.params.id)
+  Category.findByIdAndDelete(req.params.id)
     .then((category) => {
       if (category) {
         return res.status(200).json({
