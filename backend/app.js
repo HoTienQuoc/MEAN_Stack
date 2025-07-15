@@ -34,8 +34,6 @@ app.use(`${api}/orders`, ordersRoutes);
 const connectionString = process.env.CONNECTION_STRING;
 
 mongoose.connect(connectionString, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
   dbName: 'eshop-database'
 })
 .then(() => console.log("Database connection is ready ..."))
