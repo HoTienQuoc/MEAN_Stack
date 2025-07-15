@@ -13,8 +13,16 @@ router.get(`/`, async (req,res)=>{
 router.post(`/`, (req,res)=>{
     const product = new Product({
         name: req.body.name,
+        description: req.body.description,
+        richDescription: req.body.richDescription,
         image: req.body.image,
-        countInStock: req.body.countInStock
+        brand: req.body.brand, // should be an array of strings
+        price: req.body.price,
+        category: req.body.category, // should be ObjectId string
+        countInStock: req.body.countInStock,
+        rating: req.body.rating,
+        numReviews: req.body.numReviews,
+        isFeatured: req.body.isFeatured
     });
     product.save().then((createdProduct=>{
         res.status(201).json(createdProduct)
