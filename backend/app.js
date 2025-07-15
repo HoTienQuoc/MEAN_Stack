@@ -13,7 +13,7 @@ require('dotenv').config();
 
 
 //Middleware 
-app.use(express.json());
+app.use(bodyParser.json());
 app.use(morgan('tiny'))
 
 
