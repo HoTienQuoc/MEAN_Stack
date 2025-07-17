@@ -4,7 +4,7 @@ const express = require("express");
 const { Product } = require("../models/product");
 require("dotenv/config");
 const router = express.Router();
-// const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 router.get(`/`, async (req, res) => {
   const orderList = await Order.find()
@@ -122,15 +122,15 @@ router.post("/create-checkout-session", async (req, res) => {
     })
   );
 
-//   const session = await stripe.checkout.sessions.create({
-//     payment_method_types: ["card"],
-//     line_items: lineItems,
-//     mode: "payment",
-//     success_url: "http://localhost:4200/success",
-//     cancel_url: "http://localhost:4200/error",
-//   });
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ["card"],
+    line_items: lineItems,
+    mode: "payment",
+    success_url: "http://localhost:4200/success",
+    cancel_url: "http://localhost:4200/error",
+  });
 
-//   res.json({ id: session.id });
+  res.json({ id: session.id });
 });
 
 router.put("/:id", async (req, res) => {
@@ -148,11 +148,11 @@ router.put("/:id", async (req, res) => {
 });
 
 router.delete("/:id", (req, res) => {
-  Order.findByIdAndRemove(req.params.id)
+  Order.findByIdAndDelete(req.params.id)
     .then(async (order) => {
       if (order) {
         await order.orderItems.map(async (orderItem) => {
-          await OrderItem.findByIdAndRemove(orderItem);
+          await OrderItem.findByIdAndDelete(orderItem);
         });
         return res
           .status(200)
