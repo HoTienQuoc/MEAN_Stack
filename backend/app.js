@@ -1,22 +1,28 @@
-require('dotenv/config');
-
-const express = require('express');
+const express = require("express");
 const app = express();
-const morgan = require('morgan');
-const mongoose = require('mongoose');
-const cors = require('cors');
+const morgan = require("morgan");
+const mongoose = require("mongoose");
+const cors = require("cors");
+require("dotenv/config");
+const authJwt = require("./helpers/jwt");
+const errorHandler = require("./helpers/error-handler");
 
-console.log(1);
 
 // Enable Cors
 app.use(cors());
-console.log(2);
 
 
 
 // Middleware
 app.use(express.json()); // thay bodyParser.json()
-app.use(morgan('tiny'));
+
+
+//Logs
+app.use(morgan("tiny"));
+app.use(authJwt());
+app.use("/public/uploads", express.static(__dirname + "/public/uploads"));
+app.use(errorHandler);
+
 
 // Routers
 const categoriesRoutes = require("./routers/categories");
