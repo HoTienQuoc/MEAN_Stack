@@ -194,10 +194,7 @@ router.put(`/:id`, uploadOptions.single("image"), async (req, res) => {
   res.send(updatedProduct);
 });
 
-router.put(
-  `/gallery-images/:id`,
-  uploadOptions.array("images", 10),
-  async (req, res) => {
+router.put(`/gallery-images/:id`, uploadOptions.array("images", 10), async (req, res) => {
     if (!mongoose.isValidObjectId(req.params.id)) {
       res.status(400).send("invalid Product Id");
     }
